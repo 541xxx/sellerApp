@@ -58,8 +58,7 @@
         height: 54px
         width: 56px
         line-height: 14px
-        padding: 0 12px
-        /*height 0*/
+        padding: 0 12px 
         .icon
           display: inline-block
           width: 12px
