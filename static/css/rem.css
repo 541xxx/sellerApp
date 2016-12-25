@@ -1,0 +1,38 @@
+@media only screen and (min-device-width: 320px){
+  html {
+    font-size: 96px!important;
+  }
+}
+
+@media only screen and (min-device-width: 320px)and (-webkit-min-device-pixel-ratio: 2) {
+  html {
+    font-size: 96px!important;
+  }
+}
+
+@media only screen and (min-device-width: 375px)and (-webkit-min-device-pixel-ratio: 2) {
+  html{
+    font-size: 100px!important;
+  }
+}
+
+@media only screen and (min-device-width: 375px)and (-webkit-min-device-pixel-ratio: 3) {
+  html{
+    font-size: 100px!important;
+  }
+}
+
+@media only screen and (min-device-width:412px) and (-webkit-min-device-pixel-ratio: 3) {
+  html{
+    font-size: 110.4px!important;
+  }
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 320px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  html {
+    font-size: 85.333px!important;
+  }
+}
