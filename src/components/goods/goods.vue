@@ -36,11 +36,13 @@
         </li>
       </ul>
     </div>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Bscroll from 'better-scroll';
+  import shopcart from 'components/shopcart/shopcart.vue';
 
   const ERR_OK = 0;
   export default {
@@ -88,7 +90,7 @@
           }
           let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook');
           let el = foodList[index];
-          this.foodScroll.scrollToElement(el, 300);
+          this.foodScroll.scrollToElement(el, 200);
         },
         _initScroll() {
             this.menuScroll = new Bscroll(this.$els.menuWrapper, {
@@ -114,6 +116,9 @@
               this.listHeight.push(height);
             }
       }
+    },
+    components: {
+        shopcart
     }
   };
 </script>
