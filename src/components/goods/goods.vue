@@ -24,11 +24,14 @@
                  <p class="desc">{{food.description}}</p>
                  <div class="extra">
                    <span class="count">月售{{food.sellCount}}份</span>
-                   <span>好评率{{food.rating}}</span>
+                   <span>好评率{{food.rating}}%</span>
                  </div>
                 <div class="price">
                   <span class="now">¥{{food.price}}</span>
                   <span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
+                </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol :food="food"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -36,14 +39,14 @@
         </li>
       </ul>
     </div>
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Bscroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart.vue';
-
+  import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
   const ERR_OK = 0;
   export default {
     props: {
@@ -68,6 +71,17 @@
             }
            }
            return 0;
+      },
+      selectFoods() {
+          let foods = [];
+          this.goods.forEach((good) => {
+              good.foods.forEach((food) => {
+                 if (food.count) {
+                    foods.push(food);
+                 }
+              });
+          });
+          return foods;
       }
     },
     created() {
@@ -98,11 +112,11 @@
             });
 
             this.foodScroll = new Bscroll(this.$els.foodsWrapper, {
-                probeType: 3
+              click: true,
+              probeType: 3
             });
 
             this.foodScroll.on('scroll', (pos) => {
-                console.log(pos.y);
                this.scrollY = Math.abs(Math.round(pos.y));
             });
       },
@@ -115,10 +129,22 @@
               height += item.clientHeight;
               this.listHeight.push(height);
             }
+      },
+      _drop(target) {
+         // 体验优化，异步执行下一个动画
+         this.$nextTick(() => {
+           this.$refs.shopcart.drop(target);
+         });
       }
     },
     components: {
-        shopcart
+        shopcart,
+        cartcontrol
+    },
+    events: {
+        'cart.add'(target) {
+            this._drop(target);
+        }
     }
   };
 </script>
@@ -224,4 +250,9 @@
               text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
+          .cartcontrol-wrapper
+              position: absolute
+              right: 0
+              bottom: 12px
+
 </style>
