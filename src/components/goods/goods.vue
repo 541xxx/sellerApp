@@ -15,7 +15,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
+            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon"></img>
               </div>
@@ -40,6 +40,7 @@
       </ul>
     </div>
     <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <food :food="selectedFood" v-ref:food></food>
   </div>
 </template>
 
@@ -47,6 +48,7 @@
   import Bscroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart.vue';
   import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
+  import food from 'components/food/food.vue';
   const ERR_OK = 0;
   export default {
     props: {
@@ -58,7 +60,8 @@
       return {
           goods: [],
           listHeight: [],
-          scrollY: 0
+          scrollY: 0,
+          selectedFood: {}
       };
     },
     computed: {
@@ -106,6 +109,13 @@
           let el = foodList[index];
           this.foodScroll.scrollToElement(el, 200);
         },
+        selectFood(food, event) {
+          if (!event._constructed) { // 当设备为PC时  return原生点击事件 使用scroll点击事件
+            return;
+          }
+          this.selectedFood = food;
+          this.$refs.food.show();
+        },
         _initScroll() {
             this.menuScroll = new Bscroll(this.$els.menuWrapper, {
                 click: true
@@ -139,7 +149,8 @@
     },
     components: {
         shopcart,
-        cartcontrol
+        cartcontrol,
+        food
     },
     events: {
         'cart.add'(target) {
