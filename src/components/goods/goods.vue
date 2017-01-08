@@ -161,7 +161,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixim.styl"
+  @import "../../common/stylus/mixin.styl"
 
   .goods
     display: flex
