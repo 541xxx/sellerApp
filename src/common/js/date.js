@@ -15,10 +15,8 @@ export function formatDate(date, fmt) {
   };
   for (let k in o) {
     if (new RegExp(`(${k})`).test(fmt)) {
-      console.log(fmt);
       let str = o[k] + '';
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
-      console.log(RegExp.$1);
     }
   }
   return fmt;
