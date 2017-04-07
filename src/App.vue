@@ -35,6 +35,7 @@
         };
     },
     created() {
+      console.log('this is test git branch');
       this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
         response = response.body;
         if (response.errno === ERROk) {
